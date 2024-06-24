@@ -3,6 +3,7 @@ import profile from './profile.svg'
 import add_icon from './add_icon.svg'
 import list_items from './listitems.svg'
 import check_order from './order.svg'
+import upload from './upload.svg'
 
 
 export const assets ={
@@ -11,5 +12,6 @@ export const assets ={
     add_icon,
     list_items,
     check_order,
+    upload,
 
 }
