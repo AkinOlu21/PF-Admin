@@ -1,9 +1,84 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './List.css'
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { API_BASE_URL, url } from '../../../apiconfig';
+
 
 const List = () => {
+
+  const [listProduct,setListProduct] = useState([]);
+
+  const fetchListProduct = async () => {
+
+    try {
+
+    const response = await axios.get(`${url}.api/product/list`);
+    console.log(response.data);
+    if (response.data.success) {
+      setListProduct(response.data.data);
+      toast.info("products available")
+      console.log("products loaded");
+    } 
+    else{
+      console.log("product list not available");
+      toast.error("Product list not available");
+    }
+    } catch (error) {
+      toast.error("An error occurred while fetching the products");
+      console.error("Error fetching products:", error);
+      console.log(JSON.stringify(error))
+      
+    }
+    
+  }
+
+  const removeProduct = async (productID) =>{
+    console.log(productID);
+    const response = await axios.post(`${API_BASE_URL}remove`,{id:productID})
+    await fetchListProduct();
+    if (response.data.success) {
+      toast.success(response.data.message)
+      
+    }
+    else{
+      toast.error("error")
+    }
+  }
+
+    useEffect(()=>{
+      fetchListProduct();
+    },[])
+
   return (
-    <div>List</div>
+
+    <div className='list add flex-col'>
+      <p>Products</p>
+
+      <div className="list-table">
+        <div className="list-table-format title">
+          <b>Image</b>
+          <b>Name</b>
+          <b>Category</b>
+          <b>Price</b>
+          <b>Action</b>
+        </div>
+
+        {listProduct.map((item,index)=>{
+          return (
+            <div key={index} className='list-table-format'>
+              <img src={`${url}/images/`+item.image} alt="" />
+              <p>{item.name}</p>
+              <p>{item.category}</p>
+              <p>£{item.price}</p>
+              <p onClick={()=>removeProduct(item._id)} className='cursor'>akinola</p>
+            </div>
+          )
+        })}
+        
+      </div>
+
+    </div>
   )
 }
 
