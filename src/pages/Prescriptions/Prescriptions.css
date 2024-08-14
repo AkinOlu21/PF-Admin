@@ -1,0 +1,49 @@
+.prescription-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+    padding: 16px;
+}
+
+.pres-medi-note{
+    font-weight: 600;
+}
+
+.prescription-items {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+    gap: 8px;
+  }
+  
+  .pres-medi-note, .pres-CT, .pres-dosage {
+    margin-bottom: 8px;
+  }
+  
+  .pres-medi-note p, .pres-CT p, .pres-dosage p {
+    margin: 0;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .pagination button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }

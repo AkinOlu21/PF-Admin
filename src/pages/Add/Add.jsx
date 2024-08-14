@@ -3,7 +3,7 @@ import './Add.css'
 import { assets } from '../../assets/assets'
 import axios from "axios"
 import { toast } from 'react-toastify'
-import { API_BASE_URL } from '../../../apiconfig'
+
 
 const Add = () => {
 
@@ -36,7 +36,7 @@ const onSubmitHandler = async (event) => {
     formData.append("price",Number(data.price))
     formData.append("category",data.category)
     formData.append("image",image)
-    const response = await axios.post(`${API_BASE_URL}add`,formData);
+    const response = await axios.post(`${url}/api/product/add`,formData);
     if (response.data.success) {
         setData({
             name:"",
