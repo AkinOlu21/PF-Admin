@@ -11,10 +11,13 @@ const Orders = ({url}) => {
 
 
   const [orders,setOrders] = useState([]);
+  
 
 
   const fetchUserOrders = async () =>{
-    const response = await axios.get(url+"/api/order/list");
+   
+    try {
+      const response = await axios.get(url+"/api/order/list");
     if (response.data.success) {
       setOrders(response.data.data);
       console.log(response.data.data);
@@ -22,23 +25,36 @@ const Orders = ({url}) => {
     else {
       toast.error("Error")
     }
+    } catch (error) {
+      console.log(error);
+      console.error("Error fetching orders:",error);
+      toast.error("An error occurred while fetching orders. Please try again.");
+      
+    }
+    
   }
 
-  const statusHandler = async (event,orderId) =>{
-    const response = await axios.post(url+"/api/order/status",{
-      orderId,
-      status:event.target.value
-    });
-    if (response.data.success) {
-      await fetchUserOrders();
+
+  const statusHandler = async (event, orderId) => {
+    try {
+      const response = await axios.post(`${url}/api/order/status`, {
+        orderId,
+        status: event.target.value
+      });
+      if (response.data.success) {
+        await fetchUserOrders();
+      }
+    } catch (error) {
+      console.error("Error updating order status:", error);
+      toast.error("An error occurred while updating the order status.");
     }
-    console.log(event,orderId);
-  }
+  };
 
 
   useEffect(()=>{
     fetchUserOrders();
   },[])
+
 
 
   return (
@@ -62,7 +78,7 @@ const Orders = ({url}) => {
             <p className="order-item-name">{order.address.firstName+" "+order.address.lastName}</p>
             <div className='order-item-address'>
               <p>{order.address.address+","}</p>
-              <p>{order.address.city+", "+order.address.county+" , "+order.address.country+" , "+order.address.postcoddiv}</p>
+              <p>{order.address.city+", "+order.address.county+" , "+order.address.country+" , "+order.address.postcode}</p>
             </div>
             <p className='order-item-phone'>{order.address.phone}</p>
           </div>
@@ -78,8 +94,11 @@ const Orders = ({url}) => {
         </div>
         ))}
       </div>
+      
     </div>
   )
 }
 
+
+ 
 export default Orders
