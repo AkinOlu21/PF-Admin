@@ -74,15 +74,15 @@ const Prescriptions = () => {
             </div>
             
                    
-        <select onChange={(event)=> statusHandler(event,prescription._id)} value={prescription.status} >
+            <select onChange={(event)=> statusHandler(event,prescription._id)} value={prescription.status} >
             <option value="Order processing">Order Processing</option>
             <option value="Ready for delivery">Ready for delivery</option>
             <option value="Ready for collection">Ready for Collection</option>
             <option value="Out for delivery">Out for delivery</option>
             <option value="Delivered">Order Delivered</option>
             <option value="Collected">Order Collected</option>
-        </select>
-        </div>
+            </select>
+          </div>
         ))}
     </div>
     
